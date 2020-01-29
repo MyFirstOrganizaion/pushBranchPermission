@@ -8,8 +8,10 @@ Once protection has been added app create an issue on the repository mentioning 
 App use Github [@octokit](https://github.com/octokit) [webhook.js](https://github.com/octokit/webhooks.js) to listen on wehbooks and to parse received payload and [axios](https://flaviocopes.com/axios/#introduction-to-axios) to consume Github REST endpoints.
 
 Check [Update branch protection](https://developer.github.com/v3/repos/branches/#update-branch-protection) for more details.
-For further detail on how to manage branches che the Github [branches](https://developer.github.com/v3/repos/branches/) REST api
+
+For further detail on how to manage branches check the Github [branches](https://developer.github.com/v3/repos/branches/) REST api
 
 Check [Create an issue](https://developer.github.com/v3/issues/#create-an-issue)for more details.
+
 For further detail on how to manage issues check the Github [issues](https://developer.github.com/v3/issues/) REST api
 

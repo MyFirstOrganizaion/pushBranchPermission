@@ -1,36 +1,46 @@
-// install with: npm install @octokit/webhooks
-//Install with npm install @octokit/request
-
-
 const { request } = require("@octokit/request");
 const WebhooksApi = require("@octokit/webhooks");
 const webhooks = new WebhooksApi({
-  secret: "mysecret"
+  secret: "thisismysecretkey"
 });
 
 webhooks.on("*", ({ id, name, payload }) => {
-  //console.log(`"${event.name}" event received"`);
-  if ($payload.action=='create'){
-      const response1 = await request("PUT /repos/:owner/:repo/branches/master/protection", {
-            data: '{"required_status_checks": {"strict": true, "contexts": ["continuous-integration/travis-ci"] }, "enforce_admins": true, "required_pull_request_reviews": {"dismissal_restrictions": {"users": ["octocat"], "teams": ["justice-league"] }, "dismiss_stale_reviews": true, "require_code_owner_reviews": true, "required_approving_review_count": 2 }, "restrictions": {"users": ["octocat"], "teams": ["justice-league"], "apps": ["super-ci"] }, "required_linear_history": true, "allow_force_pushes": true, "allow_deletions": true } ',
-            headers: {
-              accept: "application/json",
-              authorization: "token 0000000000000000000000000000000000000001"
-            },
-            owner: $payload.owner.login,
-            repo:  $payload.repository.name       
-      });
 
-      const response2 = await request("POST /repos/:owner/:repo/issues", {
-            data: "@"+$payload.owner.login + " " + response1,
-            headers: {
-              accept: "application/json",
-              authorization: "token 0000000000000000000000000000000000000001"
-            }            
-      });
-  }
 
-};
+
+url='https://api.github.com/repos/'+payload.repository.owner.login+'/'+payload.repository.name+'/branches/master/protection'
+  if (payload.action='created'){
+
+        const axios = require('axios')
+        ;(async () => {
+          const response = await axios({
+            url: url,
+            method: 'put',
+            headers: {
+                          accept: "application/vnd.github.luke-cage-preview+json",
+                          "authorization": "token 0ccd7f514d6563e7a1ec5eaee808e66248d01468"
+                        },
+            data:'{"enforce_admins": true,"required_status_checks":null,"required_pull_request_reviews":null,"restrictions":null'
+          }).then((res) => {
+            ;(async () => {
+            const createissue = await axios({
+                        url: 'https://api.github.com/repos/'+payload.repository.owner.login+'/'+payload.repository.name+'/issues',
+                        method: 'POST',
+                        headers: {
+                                      accept: "application/json",
+                                      "authorization": "token 0ccd7f514d6563e7a1ec5eaee808e66248d01468"
+                                    },
+                        data: '{"title": "branch protected","body": "enforce_admins set to true","assignees": ["'+payload.sender.login+'"]}'
+              }).then((res) => {
+              console.log(`statusCode: ${res.statusCode}`)
+              console.log(res)
+            })
+            })()
+          })
+        })()
+      }
+
+});
 
 
 require("http")

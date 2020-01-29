@@ -18,7 +18,7 @@ url='https://api.github.com/repos/'+payload.repository.owner.login+'/'+payload.r
             method: 'put',
             headers: {
                           accept: "application/vnd.github.luke-cage-preview+json",
-                          "authorization": "token 0ccd7f514d6563e7a1ec5eaee808e66248d01468"
+                          "authorization": "token XXXXXXXX"
                         },
             data:'{"enforce_admins": true,"required_status_checks":null,"required_pull_request_reviews":null,"restrictions":null'
           }).then((res) => {
@@ -28,7 +28,7 @@ url='https://api.github.com/repos/'+payload.repository.owner.login+'/'+payload.r
                         method: 'POST',
                         headers: {
                                       accept: "application/json",
-                                      "authorization": "token 0ccd7f514d6563e7a1ec5eaee808e66248d01468"
+                                      "authorization": "token XXXXXXXX"
                                     },
                         data: '{"title": "branch protected","body": "enforce_admins set to true","assignees": ["'+payload.sender.login+'"]}'
               }).then((res) => {
